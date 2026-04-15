@@ -1,10 +1,10 @@
-﻿using CommonForReact.Infra;
-using CommonForReact.Models;
+﻿using Champerof.Infra;
+using Champerof.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using CommonForReact.Infra;
+using Champerof.Infra;
 
-namespace CommonForReact.ServiceRepository.MenuAccessRepository
+namespace Champerof.ServiceRepository.MenuAccessRepository
 {
 
     public interface IMenuAccessRepo

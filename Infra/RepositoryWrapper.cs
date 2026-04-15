@@ -1,11 +1,11 @@
-﻿using CommonForReact.Models;
+﻿using Champerof.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using System.Data;
 using System.Reflection;
 
-namespace CommonForReact.Infra
+namespace Champerof.Infra
 {
     public interface IRepositoryBase<T>
     {

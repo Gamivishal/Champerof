@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CommonForReact.Infra
+namespace Champerof.Infra
 {
     public class ChangePassword
     {

@@ -1,16 +1,16 @@
-﻿using CommonForReact.Models;
-using CommonForReact.ServiceRepository.UserRepository;
+﻿using Champerof.Models;
+using Champerof.ServiceRepository.UserRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using CommonForReact.Infra;
+using Champerof.Infra;
 using Microsoft.AspNetCore.Identity.Data;
 using System.Text.Json.Serialization;
 using OfficeOpenXml;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 
-namespace CommonForReact.Controllers
+namespace Champerof.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

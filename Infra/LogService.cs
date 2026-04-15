@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
 
-namespace CommonForReact.Infra
+namespace Champerof.Infra
 {
 	public static class LogService
 	{

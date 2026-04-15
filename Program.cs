@@ -3,16 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using CommonForReact.Infra;
-using CommonForReact.ServiceRepository.MenuAccessRepository;
-using CommonForReact.ServiceRepository.MenuRepository;
-using CommonForReact.ServiceRepository.RoleRepository;
-using CommonForReact.ServiceRepository.UserRepository;
+using Champerof.Infra;
+using Champerof.ServiceRepository.MenuAccessRepository;
+using Champerof.ServiceRepository.MenuRepository;
+using Champerof.ServiceRepository.RoleRepository;
+using Champerof.ServiceRepository.UserRepository;
 using Microsoft.AspNetCore.DataProtection;
-using CommonForReact.ServiceRepository.ChangePasswordRepository;
-using CommonForReact.ServiceRepository.LovRepository;
-using CommonForReact.ServiceRepository.UserDemoRepository;
-using CommonForReact.ServiceRepository.PropertyRepository;
+using Champerof.ServiceRepository.ChangePasswordRepository;
+using Champerof.ServiceRepository.LovRepository;
+using Champerof.ServiceRepository.UserDemoRepository;
+using Champerof.ServiceRepository.PropertyRepository;
+using Champerof.ServiceRepository.ClientRepository;
+using Champerof.ServiceRepository.ServiceRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,8 +25,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder =>
     {
-        //  builder.AllowAnyOrigin()
-        builder.WithOrigins("http://localhost:3000")
+          builder.AllowAnyOrigin()
+      //  builder.WithOrigins("http://localhost:3000")
                  .AllowAnyMethod()
                .AllowAnyHeader();
     });
@@ -61,7 +63,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "CommonForReactAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ChamperofAPI", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -108,6 +110,8 @@ builder.Services.AddScoped<ValidationService>();
 
 builder.Services.AddScoped<IUserDemoRepository, UserDemoRepository>();
 builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 
 
 
@@ -135,6 +139,7 @@ app.UseSwagger(); // for live index
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "CommmonProject v1");
+   // c.RoutePrefix = string.Empty; // ?? IMPORTANT
 });
 
 

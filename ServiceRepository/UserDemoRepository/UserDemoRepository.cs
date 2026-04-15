@@ -1,9 +1,9 @@
-﻿using CommonForReact.Infra;
-using CommonForReact.Models;
+﻿using Champerof.Infra;
+using Champerof.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
-namespace CommonForReact.ServiceRepository.UserDemoRepository
+namespace Champerof.ServiceRepository.UserDemoRepository
 {
     public class UserDemoRepository : IUserDemoRepository
     {

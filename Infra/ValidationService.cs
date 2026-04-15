@@ -1,6 +1,6 @@
-﻿using CommonForReact.Models;
+﻿using Champerof.Models;
 
-namespace CommonForReact.Infra
+namespace Champerof.Infra
 {
     public class ValidationService
     {

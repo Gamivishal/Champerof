@@ -1,7 +1,7 @@
-﻿using CommonForReact.Infra;
-using CommonForReact.Models;
+﻿using Champerof.Infra;
+using Champerof.Models;
 
-namespace CommonForReact.ServiceRepository.PropertyRepository
+namespace Champerof.ServiceRepository.PropertyRepository
 {
     public interface IPropertyRepository
     {

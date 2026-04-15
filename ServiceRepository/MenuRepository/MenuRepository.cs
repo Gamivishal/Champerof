@@ -2,12 +2,12 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using CommonForReact.Infra;
-using CommonForReact.Models;
-using CommonForReact.ServiceRepository.MenuRepository;
+using Champerof.Infra;
+using Champerof.Models;
+using Champerof.ServiceRepository.MenuRepository;
 using System.Data;
 
-namespace CommonForReact.ServiceRepository.MenuRepository
+namespace Champerof.ServiceRepository.MenuRepository
 {
     public class MenuRepository : IMenuRepository
     {

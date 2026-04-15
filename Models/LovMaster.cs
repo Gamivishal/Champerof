@@ -1,7 +1,7 @@
-﻿using CommonForReact.Infra;
+﻿using Champerof.Infra;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CommonForReact.Models
+namespace Champerof.Models
 {
     public class LovMaster : EntityBase
     {

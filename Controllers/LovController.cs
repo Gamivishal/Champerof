@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using CommonForReact.Infra;
-using CommonForReact.Models;
-using CommonForReact.ServiceRepository.LovRepository;
+using Champerof.Infra;
+using Champerof.Models;
+using Champerof.ServiceRepository.LovRepository;
 
-namespace CommonForReact.Controllers
+namespace Champerof.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 
-namespace CommonForReact.Infra
+namespace Champerof.Infra
 {
 
     public class LogEntry

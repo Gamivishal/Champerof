@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using CommonForReact.Infra;
+using Champerof.Infra;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CommonForReact.Models
+namespace Champerof.Models
 {
     public class Menu: EntityBase
     {

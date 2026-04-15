@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using CommonForReact.Infra;
-using CommonForReact.ServiceRepository.ChangePasswordRepository;
-using CommonForReact.Models;
+using Champerof.Infra;
+using Champerof.ServiceRepository.ChangePasswordRepository;
+using Champerof.Models;
 
-namespace CommonForReact.Controllers
+namespace Champerof.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

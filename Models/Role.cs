@@ -1,8 +1,8 @@
-﻿using CommonForReact.Infra;
+﻿using Champerof.Infra;
 using System.ComponentModel.DataAnnotations.Schema;
-using CommonForReact.Infra;
+using Champerof.Infra;
 
-namespace CommonForReact.Models
+namespace Champerof.Models
 {
     public class Role : EntityBase
     {

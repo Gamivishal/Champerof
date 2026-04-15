@@ -1,5 +1,5 @@
-﻿using CommonForReact.Infra;
-using CommonForReact.Models;
+﻿using Champerof.Infra;
+using Champerof.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace CommonForReact.Controllers
+namespace Champerof.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

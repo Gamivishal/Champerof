@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace CommonForReact.Controllers
+namespace Champerof.Controllers
 {
     [ApiController]
     [Route("[controller]")]

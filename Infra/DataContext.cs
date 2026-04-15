@@ -1,7 +1,7 @@
-﻿using CommonForReact.Models;
+﻿using Champerof.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CommonForReact.Infra
+namespace Champerof.Infra
 {
     public class DataContext : DbContext
     {

@@ -2,11 +2,11 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using CommonForReact.Infra;
-using CommonForReact.Models;
+using Champerof.Infra;
+using Champerof.Models;
 using System.Data;
 
-namespace CommonForReact.ServiceRepository.LovRepository
+namespace Champerof.ServiceRepository.LovRepository
 {
     public class LovRepository : ILovRepository
     {

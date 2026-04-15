@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CommonForReact.Infra
+namespace Champerof.Infra
 {
     public class EntityBase
     {

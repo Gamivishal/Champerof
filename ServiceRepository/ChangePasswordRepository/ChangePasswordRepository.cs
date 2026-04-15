@@ -1,9 +1,9 @@
 ﻿
-using CommonForReact.Infra;
+using Champerof.Infra;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 
-namespace CommonForReact.ServiceRepository.ChangePasswordRepository
+namespace Champerof.ServiceRepository.ChangePasswordRepository
 {
     public interface IChangePasswordRepository
     {

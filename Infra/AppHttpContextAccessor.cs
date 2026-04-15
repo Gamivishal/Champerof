@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace CommonForReact.Infra
+namespace Champerof.Infra
 {
 	public static class AppHttpContextAccessor
 	{

@@ -1,4 +1,4 @@
-﻿namespace CommonForReact.Infra
+﻿namespace Champerof.Infra
 {
     public class PagedResult<T>
     {

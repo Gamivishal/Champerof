@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CommonForReact.Models;
+using Champerof.Models;
 
-namespace CommonForReact.ServiceRepository.LovRepository
+namespace Champerof.ServiceRepository.LovRepository
 {
     public interface ILovRepository
     {

@@ -5,7 +5,7 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace CommonForReact.Infra
+namespace Champerof.Infra
 {
     public class Common
     {

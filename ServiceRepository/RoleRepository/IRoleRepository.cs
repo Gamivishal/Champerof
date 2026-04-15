@@ -1,9 +1,9 @@
 ﻿
-using CommonForReact.Models;
+using Champerof.Models;
 using Microsoft.AspNetCore.Mvc;
-using CommonForReact.Infra;
+using Champerof.Infra;
 
-namespace CommonForReact.ServiceRepository.RoleRepository
+namespace Champerof.ServiceRepository.RoleRepository
 {
     public interface IRoleRepository
     {

@@ -1,4 +1,4 @@
-﻿namespace CommonForReact.Models
+﻿namespace Champerof.Models
 {
     public class Dropdownname
     {

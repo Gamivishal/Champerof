@@ -1,7 +1,7 @@
-﻿using CommonForReact.Infra;
-using CommonForReact.Models;
+﻿using Champerof.Infra;
+using Champerof.Models;
 
-namespace CommonForReact.ServiceRepository.UserDemoRepository
+namespace Champerof.ServiceRepository.UserDemoRepository
 {
     public interface IUserDemoRepository
     {

@@ -1,5 +1,5 @@
-﻿using CommonForReact.Infra;
-using CommonForReact.Models;
+﻿using Champerof.Infra;
+using Champerof.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -10,7 +10,7 @@ using System.Net.Mail;
 using System.Text.RegularExpressions;
 using static System.Net.WebRequestMethods;
 
-namespace CommonForReact.ServiceRepository.UserRepository
+namespace Champerof.ServiceRepository.UserRepository
 {
     public class UserRepository : IUserRepository
     {

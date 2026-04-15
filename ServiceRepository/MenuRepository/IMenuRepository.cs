@@ -1,9 +1,9 @@
-﻿using CommonForReact.Infra;
-using CommonForReact.Models;
+﻿using Champerof.Infra;
+using Champerof.Models;
 using Microsoft.AspNetCore.Mvc;
-using CommonForReact.Infra;
+using Champerof.Infra;
 
-namespace CommonForReact.ServiceRepository.MenuRepository
+namespace Champerof.ServiceRepository.MenuRepository
 {
     public interface IMenuRepository
     {

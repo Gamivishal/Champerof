@@ -1,9 +1,9 @@
-﻿using CommonForReact.ServiceRepository.MenuAccessRepository;
+﻿using Champerof.ServiceRepository.MenuAccessRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using CommonForReact.Infra;
+using Champerof.Infra;
 
-namespace CommonForReact.Controllers
+namespace Champerof.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,6 +1,6 @@
-﻿using CommonForReact.Infra;
+﻿using Champerof.Infra;
 
-namespace CommonForReact.Models
+namespace Champerof.Models
 {
     public class UserDemo : EntityBase
     {

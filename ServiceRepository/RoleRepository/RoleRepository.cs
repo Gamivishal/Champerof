@@ -1,12 +1,12 @@
-﻿using CommonForReact.Models;
+﻿using Champerof.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using CommonForReact.Infra;
+using Champerof.Infra;
 
 using System.Data;
 
-namespace CommonForReact.ServiceRepository.RoleRepository
+namespace Champerof.ServiceRepository.RoleRepository
 {
     public class RoleRepository : IRoleRepository
     {

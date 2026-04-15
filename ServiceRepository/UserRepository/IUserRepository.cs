@@ -1,10 +1,10 @@
-﻿using CommonForReact.Models;
+﻿using Champerof.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using CommonForReact.Infra;
-using CommonForReact.Infra;
+using Champerof.Infra;
+using Champerof.Infra;
 
-namespace CommonForReact.ServiceRepository.UserRepository
+namespace Champerof.ServiceRepository.UserRepository
 {
     public interface IUserRepository
     {

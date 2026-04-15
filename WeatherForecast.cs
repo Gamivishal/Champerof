@@ -1,4 +1,4 @@
-namespace CommonForReact
+namespace Champerof
 {
     public class WeatherForecast
     {
