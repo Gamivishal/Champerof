@@ -12,5 +12,7 @@ namespace Champerof.ServiceRepository.InvoiceRepository
 
         Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> AddOrUpdateInvoiceCombo(InvoiceCombo model);
         Task<InvoiceCombo?> GetInvoiceWithItems(long id);
+
+        Task<PagedResult<Invoices>> Unpaid_Invoice(int start, int length, string sortColumn, string sortColumnDir, string searchValue);
     }
 }

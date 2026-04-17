@@ -146,5 +146,29 @@ namespace Champerof.ServiceRepository.InvoiceRepository
                 Items = items ?? new List<InvoiceItems>()
             };
         }
+
+
+
+        public async Task<PagedResult<Invoices>> Unpaid_Invoice(
+    int start,
+    int length,
+    string sortColumn,
+    string sortColumnDir,
+    string searchValue)
+        {
+            SqlParameter[] parameters = null;
+
+            var result = _repositoryBase.ExecuteWithPagination(
+                "sp_Invoice_GetUnpaid",
+                parameters,
+                start,
+                length,
+                sortColumn,
+                sortColumnDir,
+                searchValue
+            );
+
+            return await Task.FromResult(result);
+        }
     }
 }
