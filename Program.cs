@@ -15,6 +15,10 @@ using Champerof.ServiceRepository.UserDemoRepository;
 using Champerof.ServiceRepository.PropertyRepository;
 using Champerof.ServiceRepository.ClientRepository;
 using Champerof.ServiceRepository.ServiceRepository;
+using Champerof.ServiceRepository.InvoiceRepository;
+using Champerof.ServiceRepository.AdvancePaymentRepository;
+using Champerof.ServiceRepository.PaymentRepository;
+using Champerof.ServiceRepository.InvoiceItemRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -112,6 +116,10 @@ builder.Services.AddScoped<IUserDemoRepository, UserDemoRepository>();
 builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddScoped<IAdvancePaymentRepository,AdvancePaymentRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IInvoiceItemRepository, InvoiceItemRepository>();
 
 
 

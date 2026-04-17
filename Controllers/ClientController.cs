@@ -42,9 +42,13 @@ namespace Champerof.Controllers
             var email = _validation.ValidateEmail(client.Email);
             if (!email.IsSuccess) return Ok(email);
 
+            var mobileValidation = _validation.ValidateMobile(client.Phone);
+            if (!mobileValidation.IsSuccess) { return Ok(mobileValidation); }
+
             var (IsSuccess, Message, Id, Extra) = await _clientRepository.AddOrUpdateClient(client);
 
             CommonViewModel.IsSuccess = IsSuccess;
+            CommonViewModel.IsConfirm = true;
             CommonViewModel.StatusCode = IsSuccess ? ResponseStatusCode.Success : ResponseStatusCode.Error;
             CommonViewModel.Message = Message;
             CommonViewModel.Data = Id;
@@ -79,6 +83,7 @@ namespace Champerof.Controllers
             var (IsSuccess, Message, Id, Extra) = await _clientRepository.DeleteClient(id);
 
             CommonViewModel.IsSuccess = IsSuccess;
+            CommonViewModel.IsConfirm = true;
             CommonViewModel.StatusCode = IsSuccess ? ResponseStatusCode.Success : ResponseStatusCode.Error;
             CommonViewModel.Message = Message;
 

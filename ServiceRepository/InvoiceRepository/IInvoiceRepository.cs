@@ -9,5 +9,8 @@ namespace Champerof.ServiceRepository.InvoiceRepository
         Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> AddOrUpdateInvoice(Invoices invoice);
         Task<Invoices?> GetInvoiceById(long id);
         Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> DeleteInvoice(long id);
+
+        Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> AddOrUpdateInvoiceCombo(InvoiceCombo model);
+        Task<InvoiceCombo?> GetInvoiceWithItems(long id);
     }
 }

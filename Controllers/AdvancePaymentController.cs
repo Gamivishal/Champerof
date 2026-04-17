@@ -1,6 +1,7 @@
 ﻿using Champerof.Infra;
 using Champerof.Models;
-using Champerof.ServiceRepository.ServiceRepository;
+using Champerof.ServiceRepository.AdvancePaymentRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,23 +9,23 @@ namespace Champerof.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ServiceController : ControllerBase
+    public class AdvancePaymentController : ControllerBase
     {
-
-        private readonly IServiceRepository _serviceRepository;
+        private readonly IAdvancePaymentRepository _repository;
         private readonly CommonViewModel CommonViewModel = new();
         private readonly ValidationService _validation;
 
-        public ServiceController(IServiceRepository serviceRepository, ValidationService validation)
+        public AdvancePaymentController(IAdvancePaymentRepository repository, ValidationService validation)
         {
-            _serviceRepository = serviceRepository;
+            _repository = repository;
             _validation = validation;
         }
 
         [HttpGet("[Action]")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllpage(int start = 0, int length = 10, string sortColumn = "", string sortColumnDir = "asc", string searchValue = "")
         {
-            var data = await _serviceRepository.GetAllServices(start, length, sortColumn, sortColumnDir, searchValue);
+            var data = await _repository.GetAllAdvancePayments(start, length, sortColumn, sortColumnDir, searchValue);
 
             CommonViewModel.IsSuccess = true;
             CommonViewModel.StatusCode = ResponseStatusCode.Success;
@@ -34,20 +35,10 @@ namespace Champerof.Controllers
         }
 
         [HttpPost("[Action]")]
-        public async Task<IActionResult> Add(Services service)
+        public async Task<IActionResult> Add(AdvancePayment model)
         {
-            var validation = _validation.ValidateRequired(service.ServiceName, "Service Name");
-            if (!validation.IsSuccess) return Ok(validation);
 
-            if (!service.DefaultPrice.HasValue || service.DefaultPrice <= 0)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                CommonViewModel.Message = "Default Price must be greater than 0";
-                return Ok(CommonViewModel);
-            }
-
-            var (IsSuccess, Message, Id, Extra) = await _serviceRepository.AddOrUpdateService(service);
+            var (IsSuccess, Message, Id, Extra) = await _repository.AddOrUpdateAdvancePayment(model);
 
             CommonViewModel.IsSuccess = IsSuccess;
             CommonViewModel.IsConfirm = true;
@@ -61,7 +52,7 @@ namespace Champerof.Controllers
         [HttpGet("[Action]")]
         public async Task<IActionResult> GetById(long id)
         {
-            var data = await _serviceRepository.GetServiceById(id);
+            var data = await _repository.GetAdvancePaymentById(id);
 
             if (data != null)
             {
@@ -73,7 +64,7 @@ namespace Champerof.Controllers
             {
                 CommonViewModel.IsSuccess = false;
                 CommonViewModel.StatusCode = ResponseStatusCode.NotFound;
-                CommonViewModel.Message = "Service not found";
+                CommonViewModel.Message = "Record not found";
             }
 
             return Ok(CommonViewModel);
@@ -82,7 +73,7 @@ namespace Champerof.Controllers
         [HttpDelete("[Action]")]
         public async Task<IActionResult> Delete(long id)
         {
-            var (IsSuccess, Message, Id, Extra) = await _serviceRepository.DeleteService(id);
+            var (IsSuccess, Message, Id, Extra) = await _repository.DeleteAdvancePayment(id);
 
             CommonViewModel.IsSuccess = IsSuccess;
             CommonViewModel.IsConfirm = true;

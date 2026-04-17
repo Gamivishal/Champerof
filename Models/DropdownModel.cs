@@ -12,4 +12,12 @@
         public string? Name { get; set; }
 
     }
+
+    public class ServiceName
+    {
+        public long Id { get; set; }
+        public string? Name { get; set; }
+        public decimal? DefaultPrice { get; set; }
+
+    }
 }

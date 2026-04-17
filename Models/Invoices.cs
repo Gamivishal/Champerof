@@ -20,9 +20,15 @@ namespace Champerof.Models
         public string? Notes { get; set; }
 
         // From JOIN
-       [NotMapped] public string? ClientName { get; set; }
+        [NotMapped] public string? ClientName { get; set; }
+        [NotMapped] public string? StatusName { get; set; }
 
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
+    }
+    public class InvoiceCombo
+    {
+        public Invoices Invoice { get; set; } = new();
+        public List<InvoiceItems> Items { get; set; } = new();
     }
 }

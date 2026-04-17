@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Champerof.Infra;
 using Champerof.Models;
+using System.Data;
 
 namespace Champerof.Controllers
 {
@@ -13,12 +14,14 @@ namespace Champerof.Controllers
     {
         private readonly IRepositoryBase<Dropdownname> _repositoryBase;
         private readonly IRepositoryBase<Lov_Master> _Base;
+        private readonly IRepositoryBase<ServiceName> _servicename;
         private readonly CommonViewModel CommonViewModel = new();
 
-        public DropdownController(IRepositoryBase<Dropdownname> repositoryBase, IRepositoryBase<Lov_Master> Base)
+        public DropdownController(IRepositoryBase<Dropdownname> repositoryBase, IRepositoryBase<Lov_Master> Base, IRepositoryBase<ServiceName> servicename)
         {
             _repositoryBase = repositoryBase;
             _Base = Base;
+            _servicename = servicename;
         }
 
         [HttpGet("[Action]")]
@@ -359,6 +362,110 @@ namespace Champerof.Controllers
 
                 LogEntry.InsertLogEntry(log);
             }
+            return Ok(CommonViewModel);
+        }
+
+        [HttpGet("[Action]")]
+        [AllowAnonymous]
+        public IActionResult ClientList()
+        {
+            try
+            {
+                var parameters = new List<SqlParameter>
+        {
+            new SqlParameter("@ClientId", DBNull.Value)
+        };
+
+                var dt = _repositoryBase.ExecuteStoredProcedureDataTable("sp_Client_Get", parameters);
+
+                var data = dt.AsEnumerable().Select(x => new Dropdownname
+                {
+                    Id = x.Field<long>("ClientId"),
+                    Name = x.Field<string>("ClientName")
+                }).ToList();
+
+                CommonViewModel.IsSuccess = true;
+                CommonViewModel.StatusCode = ResponseStatusCode.Success;
+                CommonViewModel.Data = data;
+            }
+            catch (Exception ex)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                CommonViewModel.Message = ex.Message;
+            }
+
+            return Ok(CommonViewModel);
+        }
+
+
+        [HttpGet("[Action]")]
+        [AllowAnonymous]
+        public IActionResult ServiceList()
+        {
+            try
+            {
+                var parameters = new List<SqlParameter>
+        {
+            new SqlParameter("@ServiceId", DBNull.Value)
+        };
+
+                var dt = _servicename.ExecuteStoredProcedureDataTable("sp_Service_Get", parameters);
+
+                var data = dt.AsEnumerable().Select(x => new ServiceName
+                {
+                    Id = x.Field<long>("ServiceId"),
+                    Name = x.Field<string>("ServiceName"),
+                    DefaultPrice = x.Field<decimal>("DefaultPrice")
+
+                }).ToList();
+
+                CommonViewModel.IsSuccess = true;
+                CommonViewModel.StatusCode = ResponseStatusCode.Success;
+                CommonViewModel.Data = data;
+            }
+            catch (Exception ex)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                CommonViewModel.Message = ex.Message;
+            }
+
+            return Ok(CommonViewModel);
+        }
+
+
+        [HttpGet("[Action]")]
+        [AllowAnonymous]
+        public IActionResult InvoiceList()
+        {
+            try
+            {
+                var parameters = new List<SqlParameter>
+        {
+            new SqlParameter("@InvoiceId", DBNull.Value)
+        };
+
+                var dt = _repositoryBase.ExecuteStoredProcedureDataTable("sp_Invoice_Get", parameters);
+
+                var data = dt.AsEnumerable().Select(x => new Dropdownname
+                {
+                    Id = x.Field<long>("InvoiceId"),
+                    Name = x.Field<string>("InvoiceNumber")
+
+                }).ToList();
+
+                CommonViewModel.IsSuccess = true;
+                CommonViewModel.StatusCode = ResponseStatusCode.Success;
+                CommonViewModel.Data = data;
+            }
+            catch (Exception ex)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                CommonViewModel.Message = ex.Message;
+            }
+
             return Ok(CommonViewModel);
         }
 

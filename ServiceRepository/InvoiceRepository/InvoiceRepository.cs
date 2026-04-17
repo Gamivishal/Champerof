@@ -85,5 +85,66 @@ namespace Champerof.ServiceRepository.InvoiceRepository
 
             return await Task.FromResult(result);
         }
+
+
+
+
+        public async Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> AddOrUpdateInvoiceCombo(InvoiceCombo model)
+        {
+            var itemsJson = Newtonsoft.Json.JsonConvert.SerializeObject(model.Items);
+
+            List<SqlParameter> oParams = new()
+    {
+        new SqlParameter("@InvoiceId", model.Invoice.InvoiceId),
+        new SqlParameter("@ClientId", model.Invoice.ClientId ?? (object)DBNull.Value),
+        new SqlParameter("@InvoiceNumber", model.Invoice.InvoiceNumber ?? (object)DBNull.Value),
+        new SqlParameter("@InvoiceDate", model.Invoice.InvoiceDate ?? (object)DBNull.Value),
+        new SqlParameter("@DueDate", model.Invoice.DueDate ?? (object)DBNull.Value),
+        new SqlParameter("@SubTotal", model.Invoice.SubTotal ?? (object)DBNull.Value),
+        new SqlParameter("@Discount", model.Invoice.Discount ?? (object)DBNull.Value),
+        new SqlParameter("@TaxAmount", model.Invoice.TaxAmount ?? (object)DBNull.Value),
+        new SqlParameter("@FinalAmount", model.Invoice.FinalAmount ?? (object)DBNull.Value),
+        new SqlParameter("@Status", model.Invoice.Status ?? (object)DBNull.Value),
+        new SqlParameter("@Notes", model.Invoice.Notes ?? (object)DBNull.Value),
+
+        new SqlParameter("@Items", itemsJson),  // 🔥 JSON
+
+        new SqlParameter("@Operated_By", AppHttpContextAccessor.JwtUserId),
+        new SqlParameter("@Action", model.Invoice.InvoiceId == 0 ? "INSERT" : "UPDATE")
+    };
+
+            var result = _repositoryBase.ExecuteStoredProcedurenew("sp_InvoiceCombo_Save", oParams, true);
+
+            return await Task.FromResult(result);
+        }
+
+        public async Task<InvoiceCombo?> GetInvoiceWithItems(long id)
+        {
+            List<SqlParameter> parameters = new()
+    {
+        new SqlParameter("@InvoiceId", id)
+    };
+
+            var ds = _repositoryBase.ExecuteStoredProcedureDataSet("sp_Invoice_Get", parameters);
+
+            if (ds == null || ds.Tables.Count < 2)
+                return null;
+
+            // 🔹 Invoice (first table)
+            var invoiceJson = Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[0]);
+            var invoice = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Invoices>>(invoiceJson)?.FirstOrDefault();
+
+            // 🔹 Items (second table)
+            var itemsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[1]);
+            var items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<InvoiceItems>>(itemsJson);
+
+            if (invoice == null) return null;
+
+            return new InvoiceCombo
+            {
+                Invoice = invoice,
+                Items = items ?? new List<InvoiceItems>()
+            };
+        }
     }
 }
