@@ -37,6 +37,45 @@ namespace Champerof.Controllers
         [HttpPost("[Action]")]
         public async Task<IActionResult> Add(Payments model)
         {
+            if (model.ClientId == null || model.ClientId <= 0)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Client is required";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
+
+            if (model.InvoiceId == null || model.InvoiceId <= 0)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Invoice is required";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
+
+            if (model.PaymentDate == null)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Payment date is required";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
+
+            if (model.Amount == null || model.Amount <= 0)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Amount is required";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
+
+            if (string.IsNullOrWhiteSpace(model.PaymentMode))
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Payment mode is required";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
 
             var (IsSuccess, Message, Id, Extra) = await _repository.AddOrUpdatePayment(model);
 

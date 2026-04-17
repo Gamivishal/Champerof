@@ -228,5 +228,19 @@ namespace Champerof.Controllers
 
             return Ok(CommonViewModel);
         }
+
+
+        [HttpGet("[Action]")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PendingPayment(int start = 0, int length = 10, string sortColumn = "", string sortColumnDir = "asc", string searchValue = "")
+        {
+            var data = await _invoiceRepository.Unpaid_Invoice(start, length, sortColumn, sortColumnDir, searchValue);
+
+            CommonViewModel.IsSuccess = true;
+            CommonViewModel.StatusCode = ResponseStatusCode.Success;
+            CommonViewModel.Data = data;
+
+            return Ok(CommonViewModel);
+        }
     }
 }

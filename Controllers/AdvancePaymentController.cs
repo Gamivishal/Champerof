@@ -38,6 +38,23 @@ namespace Champerof.Controllers
         public async Task<IActionResult> Add(AdvancePayment model)
         {
 
+            if (model.ClientId == null || model.ClientId <= 0)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Client Name is required";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
+
+            if (model.TotalAmount == null || model.TotalAmount <= 0)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Total amount is required";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
+
+
             var (IsSuccess, Message, Id, Extra) = await _repository.AddOrUpdateAdvancePayment(model);
 
             CommonViewModel.IsSuccess = IsSuccess;
