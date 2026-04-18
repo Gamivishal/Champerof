@@ -18,5 +18,30 @@ namespace Champerof.ServiceRepository.PaymentFollowUpRepository
         Task<PaymentFollowUp?> GetById(long id);
 
         Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> Delete(long id);
+
+        // pendingpayment
+
+        Task<PagedResult<PaymentFollowUp>> GetAllpending(
+int start,
+int length,
+string sortColumn,
+string sortColumnDir,
+string searchValue,
+long invoiceId);
+
+        Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> AddOrUpdatePending(PaymentFollowUp model);
+
+        Task<PaymentFollowUp?> GetByIdpending(long id);
+
+        Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> DeletePending(long id);
+
+        //History
+        Task<PagedResult<PaymentFollowUp>> GetAllHistory(
+int start,
+int length,
+string sortColumn,
+string sortColumnDir,
+string searchValue,
+long FollowupId);
     }
 }
