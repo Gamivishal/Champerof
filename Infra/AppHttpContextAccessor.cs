@@ -72,9 +72,9 @@ namespace Champerof.Infra
 
 
 		public static long JwtUserId => Convert.ToInt64(AppHttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
-        public static long JwtRoleId => Convert.ToInt64(AppHttpContext?.User?.FindFirst("RoleId")?.Value ?? "0");
+		public static long JwtRoleId => Convert.ToInt64(AppHttpContext?.User?.FindFirst("RoleId")?.Value ?? "0");
 
-        public static string JwtUserName =>
+		public static string JwtUserName =>
 			AppHttpContext?.User?.FindFirst(ClaimTypes.Name)?.Value ?? "";
 
 		public static string ApplicationName => Convert.ToString(AppHttpContextAccessor.AppConfiguration.GetSection("loginsert").GetSection("ApplicationName").Value);
@@ -82,8 +82,18 @@ namespace Champerof.Infra
 		public static string Defaultpassword = "bgfjtgry";// for default password
 
 
+		public static readonly string[] AllowedFileExtensions = { ".jpg", ".jpeg", ".png", };
 
-    }
+		public static bool IsValidFileExtension(string fileName)
+		{
+			if (string.IsNullOrEmpty(fileName))
+				return false;
+
+			string extension = Path.GetExtension(fileName).ToLower();
+			return AllowedFileExtensions.Contains(extension);
+		}
+
+	}
 
 	public class StartsNumericConstraint : IRouteConstraint
 	{
