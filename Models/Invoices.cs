@@ -31,4 +31,13 @@ namespace Champerof.Models
         public Invoices Invoice { get; set; } = new();
         public List<InvoiceItems> Items { get; set; } = new();
     }
+
+    public class InvoiceFullDto
+    {
+        public Invoices Invoice { get; set; } = new();
+        public List<InvoiceItems> Items { get; set; } = new();
+        public CompanyMaster? Company { get; set; }
+        public List<TermsAndConditions> Terms { get; set; } = new();
+    }
+
 }

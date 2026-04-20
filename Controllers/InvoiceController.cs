@@ -242,5 +242,30 @@ namespace Champerof.Controllers
 
             return Ok(CommonViewModel);
         }
+
+
+        [HttpGet("[Action]")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetInvoicesLayoutdata(long id)
+        {
+            var data = await _invoiceRepository.GetInvoicesLayoutdata(id);
+
+            if (data != null)
+            {
+                CommonViewModel.IsSuccess = true;
+                CommonViewModel.StatusCode = ResponseStatusCode.Success;
+                CommonViewModel.Data = data;
+            }
+            else
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.StatusCode = ResponseStatusCode.NotFound;
+                CommonViewModel.Message = "Invoice not found";
+            }
+
+            return Ok(CommonViewModel);
+        }
+
+
     }
 }

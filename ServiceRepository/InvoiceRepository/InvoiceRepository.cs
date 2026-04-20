@@ -8,11 +8,13 @@ namespace Champerof.ServiceRepository.InvoiceRepository
     {
         private readonly DataContext _context;
         private readonly IRepositoryBase<Invoices> _repositoryBase;
+        private readonly IRepositoryBase<InvoiceFullDto> _repositoryBaseinvoive;
 
-        public InvoiceRepository(DataContext context, IRepositoryBase<Invoices> repositoryBase)
+        public InvoiceRepository(DataContext context, IRepositoryBase<Invoices> repositoryBase, IRepositoryBase<InvoiceFullDto> repositoryBaseinvoive)
         {
             _context = context;
             _repositoryBase = repositoryBase;
+            _repositoryBaseinvoive = repositoryBaseinvoive;
         }
 
         public async Task<PagedResult<Invoices>> GetAllInvoices(
@@ -169,6 +171,44 @@ namespace Champerof.ServiceRepository.InvoiceRepository
             );
 
             return await Task.FromResult(result);
+        }
+   
+
+    public async Task<InvoiceFullDto?> GetInvoicesLayoutdata(long id)
+        {
+            List<SqlParameter> parameters = new()
+    {
+        new SqlParameter("@InvoiceId", id)
+    };
+
+            var ds = _repositoryBase.ExecuteStoredProcedureDataSet("sp_InvoiceLayout_Get", parameters);
+
+            if (ds == null || ds.Tables.Count < 2)
+                return null;
+
+            // 🔹 Invoice (first table)
+            var invoiceJson = Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[0]);
+            var invoice = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Invoices>>(invoiceJson)?.FirstOrDefault();
+
+            // 🔹 Items (second table)
+            var itemsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[1]);
+            var items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<InvoiceItems>>(itemsJson);
+
+            var CompanyMasterJson = Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[2]);
+            var CompanyMaster = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CompanyMaster>>(CompanyMasterJson).FirstOrDefault();
+
+            var TermsAndConditionsJson = Newtonsoft.Json.JsonConvert.SerializeObject(ds.Tables[3]);
+            var TermsAndConditions = Newtonsoft.Json.JsonConvert.DeserializeObject<List<TermsAndConditions>>(TermsAndConditionsJson);
+
+            if (invoice == null) return null;
+
+            return new InvoiceFullDto
+            {
+                Invoice = invoice,
+                Company = CompanyMaster,
+                Terms = TermsAndConditions,
+                Items = items ?? new List<InvoiceItems>()
+            };
         }
     }
 }

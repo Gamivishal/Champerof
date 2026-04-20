@@ -60,6 +60,13 @@ namespace Champerof.Controllers
                 CommonViewModel.StatusCode = ResponseStatusCode.Error;
                 return Ok(CommonViewModel);
             }
+            else if (model.PaymentDate.Value.Date > DateTime.Today)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Payment date cannot be in the future";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
 
             if (model.Amount == null || model.Amount <= 0)
             {

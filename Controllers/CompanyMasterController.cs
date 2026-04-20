@@ -82,13 +82,18 @@ namespace Champerof.Controllers
                 //-----------------------------------------
                 // FILE HANDLING
                 //-----------------------------------------
-                if (file == null || file.Length == 0)
+                if (dto.Id == 0)
                 {
-                    CommonViewModel.IsSuccess = false;
-                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                    CommonViewModel.Message = "Please Select Photo";
-                    return Ok(CommonViewModel);
+                    if (file == null || file.Length == 0)
+                    {
+                        CommonViewModel.IsSuccess = false;
+                        CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                        CommonViewModel.Message = "Please Select Photo";
+                        return Ok(CommonViewModel);
+                    }
+
                 }
+             
                 if (file != null && file.Length > 0)
                 {
                     if (!AppHttpContextAccessor.IsValidFileExtension(file.FileName))

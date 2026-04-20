@@ -20,6 +20,7 @@ namespace Champerof.Models
         // JOIN fields
         [NotMapped] public string? ClientName { get; set; }
         [NotMapped] public string? InvoiceNumber { get; set; }
+        [NotMapped] public string? PaymentModeName { get; set; }
 
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }
