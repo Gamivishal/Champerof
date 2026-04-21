@@ -43,14 +43,18 @@ namespace Champerof.ServiceRepository.PaymentRepository
             {
                 new SqlParameter("@PaymentId", model.PaymentId),
                 new SqlParameter("@ClientId", model.ClientId ?? (object)DBNull.Value),
+                new SqlParameter("@IS_Advance", model.IS_Advance ?? (object)DBNull.Value),
                 new SqlParameter("@InvoiceId", model.InvoiceId ?? (object)DBNull.Value),
                 new SqlParameter("@PaymentDate", model.PaymentDate ?? (object)DBNull.Value),
                 new SqlParameter("@Amount", model.Amount ?? (object)DBNull.Value),
+                new SqlParameter("@AdvanvePayment", model.AdvanvePayment ??(object) DBNull.Value),
                 new SqlParameter("@PaymentMode", model.PaymentMode ?? (object)DBNull.Value),
                 new SqlParameter("@ReferenceNo", model.ReferenceNo ?? (object)DBNull.Value),
                 new SqlParameter("@Notes", model.Notes ?? (object)DBNull.Value),
                 new SqlParameter("@Operated_By", AppHttpContextAccessor.JwtUserId),
-                new SqlParameter("@Action", model.PaymentId == 0 ? "INSERT" : "UPDATE")
+                new SqlParameter("@Advance_ID", model.Advance_ID ?? (object)DBNull.Value),
+                new SqlParameter("@Action", model.PaymentId == 0 ? "INSERT" : "UPDATE"),
+                new SqlParameter("@Flage", model.IS_Advance == true ? true : false)
             };
 
             var result = _repositoryBase.ExecuteStoredProcedurenew("sp_Payment_Save", oParams, true);

@@ -22,6 +22,10 @@ namespace Champerof.Models
         // From JOIN
         [NotMapped] public string? ClientName { get; set; }
         [NotMapped] public string? StatusName { get; set; }
+        [NotMapped] public decimal? AdvanceAmount { get; set; }
+        [NotMapped] public decimal? RemainingAmount { get; set; }
+        [NotMapped] public decimal? PaidAmount { get; set; }
+        [NotMapped] public decimal? PendingAmount { get; set; }
 
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }

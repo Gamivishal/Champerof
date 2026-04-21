@@ -36,7 +36,7 @@ namespace Champerof.Controllers
 
         [HttpPost("[Action]")]
         public async Task<IActionResult> Add(AdvancePayment model)
-        {
+            {
 
             if (model.ClientId == null || model.ClientId <= 0)
             {

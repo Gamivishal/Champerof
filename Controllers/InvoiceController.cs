@@ -109,6 +109,13 @@ namespace Champerof.Controllers
             //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
             //    return Ok(CommonViewModel);
             //}
+            if(model.Items == null || model.Items.Count == 0)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "At least one item is required";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
 
             if (model.Invoice.ClientId == null || model.Invoice.ClientId <= 0)
             {

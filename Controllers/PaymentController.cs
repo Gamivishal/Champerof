@@ -68,14 +68,18 @@ namespace Champerof.Controllers
                 return Ok(CommonViewModel);
             }
 
-            if (model.Amount == null || model.Amount <= 0)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Amount is required";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
+            
 
+            if (model.IS_Advance == false)
+            {
+                if (model.Amount == null || model.Amount <= 0)
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Amount is required";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+            }
             if (string.IsNullOrWhiteSpace(model.PaymentMode))
             {
                 CommonViewModel.IsSuccess = false;

@@ -437,16 +437,16 @@ namespace Champerof.Controllers
 
         [HttpGet("[Action]")]
         [AllowAnonymous]
-        public IActionResult InvoiceList()
+        public IActionResult InvoiceList(long clientId=0)
         {
             try
             {
                 var parameters = new List<SqlParameter>
         {
-            new SqlParameter("@InvoiceId", DBNull.Value)
+            new SqlParameter("@ClientId", clientId)
         };
 
-                var dt = _repositoryBase.ExecuteStoredProcedureDataTable("sp_Invoice_Get", parameters);
+                var dt = _repositoryBase.ExecuteStoredProcedureDataTable("sp_DD_Invoice", parameters);
 
                 var data = dt.AsEnumerable().Select(x => new Dropdownname
                 {
