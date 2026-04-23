@@ -79,19 +79,19 @@ namespace Champerof.ServiceRepository.LovRepository
         {
             try
             {
-           //     model.Action = string.IsNullOrWhiteSpace(model.Lov_Code)
-           //? "INSERT"
-           //: "UPDATE";
+                //     model.Action = string.IsNullOrWhiteSpace(model.Lov_Code)
+                //? "INSERT"
+                //: "UPDATE";
                 List<SqlParameter> oParams = new();
 
-                
-                oParams.Add (  new SqlParameter("@Lov_Column", model.Lov_Column));
-                oParams.Add (  new SqlParameter("@Display_Text", model.Display_Text));
-                oParams.Add (  new SqlParameter("@Operated_By",AppHttpContextAccessor.JwtUserId));
+
+                oParams.Add(new SqlParameter("@Lov_Column", model.Lov_Column));
+                oParams.Add(new SqlParameter("@Display_Text", model.Display_Text));
+                oParams.Add(new SqlParameter("@Operated_By", AppHttpContextAccessor.JwtUserId));
                 oParams.Add(new SqlParameter("@Action", model.Action));
 
 
-                var result = _repositoryBase.ExecuteStoredProcedurenew("SP_Lov_Save", oParams,true);
+                var result = _repositoryBase.ExecuteStoredProcedurenew("SP_Lov_Save", oParams, true);
 
                 return await Task.FromResult(result);
             }
@@ -115,18 +115,18 @@ namespace Champerof.ServiceRepository.LovRepository
            : "UPDATE";
                 List<SqlParameter> oParams = new();
 
-                
-                oParams.Add (  new SqlParameter("@Lov_Column", model.Lov_Column));
-                oParams.Add (  new SqlParameter("@Display_Text", model.Display_Text));
-                oParams.Add (  new SqlParameter("@Lov_Code", model.Lov_Code ?? ""));
-                oParams.Add (  new SqlParameter("@Lov_Desc", model.Lov_Desc));
-                oParams.Add (  new SqlParameter("@DisplayOrder", model.DisplayOrder));
-                oParams.Add (  new SqlParameter("@IsActive", model.IsActive));
-                oParams.Add (  new SqlParameter("@Operated_By", model.CreatedBy));
-                oParams.Add (  new SqlParameter("@Action", model.Action));
+
+                oParams.Add(new SqlParameter("@Lov_Column", model.Lov_Column));
+                oParams.Add(new SqlParameter("@Display_Text", model.Display_Text));
+                oParams.Add(new SqlParameter("@Lov_Code", model.Lov_Code ?? ""));
+                oParams.Add(new SqlParameter("@Lov_Desc", model.Lov_Desc));
+                oParams.Add(new SqlParameter("@DisplayOrder", model.DisplayOrder));
+                oParams.Add(new SqlParameter("@IsActive", model.IsActive));
+                oParams.Add(new SqlParameter("@Operated_By", model.CreatedBy));
+                oParams.Add(new SqlParameter("@Action", model.Action));
 
 
-                var result = _repositoryBase.ExecuteStoredProcedurenew("SP_LovDtl_Save", oParams,true);
+                var result = _repositoryBase.ExecuteStoredProcedurenew("SP_LovDtl_Save", oParams, true);
 
                 return await Task.FromResult(result);
             }
@@ -142,8 +142,7 @@ namespace Champerof.ServiceRepository.LovRepository
         // =====================================
         public async Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> DeleteLovDetail(
             string lovColumn,
-            string? lovCode,
-            long operatedBy)
+            string? lovCode)
         {
 
             try
@@ -152,10 +151,33 @@ namespace Champerof.ServiceRepository.LovRepository
                 {
                 new SqlParameter("@Lov_Column", lovColumn),
                 new SqlParameter("@Lov_Code", lovCode),
-                new SqlParameter("@Operated_By", operatedBy)
+                new SqlParameter("@Operated_By", AppHttpContextAccessor.JwtUserId)
                 };
 
                 var result = _repositoryBase.ExecuteStoredProcedurenew("SP_LovDtl_Delete", parameters, true);
+
+                return await Task.FromResult(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public async Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> DeleteLovMaster(
+    string lovColumn)
+        {
+
+            try
+            {
+                List<SqlParameter> parameters = new()
+                {
+                new SqlParameter("@Lov_Column", lovColumn),
+                new SqlParameter("@Operated_By", AppHttpContextAccessor.JwtUserId)
+                };
+
+                var result = _repositoryBase.ExecuteStoredProcedurenew("SP_LovMaster_Delete", parameters, true);
 
                 return await Task.FromResult(result);
             }

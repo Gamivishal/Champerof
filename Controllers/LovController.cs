@@ -119,13 +119,12 @@ namespace Champerof.Controllers
         [HttpDelete("[Action]")]
         public async Task<IActionResult> DeleteDetail(
             string lovColumn,
-            string? lovCode,
-            long operatedBy)
+            string? lovCode)
         {
             try
             {
                 var (IsSuccess, Message, Id, Extra) = await _lovRepository.DeleteLovDetail(
-                    lovColumn, lovCode, operatedBy);
+                    lovColumn, lovCode);
 
                 CommonViewModel.IsSuccess = IsSuccess;
                 CommonViewModel.IsConfirm = true;
@@ -135,7 +134,7 @@ namespace Champerof.Controllers
             }
             catch (Exception ex)
             {
-                LogError(ex, new { lovColumn, lovCode, operatedBy });
+                LogError(ex, new { lovColumn, lovCode });
 
                 CommonViewModel.IsSuccess = false;
                 CommonViewModel.StatusCode = ResponseStatusCode.Error;
@@ -145,6 +144,36 @@ namespace Champerof.Controllers
             }
             return Ok(CommonViewModel);
         }
+
+        [HttpDelete("[Action]")]
+        public async Task<IActionResult> DeleteMaster(
+    string lovColumn)
+        {
+            try
+            {
+                var (IsSuccess, Message, Id, Extra) = await _lovRepository.DeleteLovMaster(
+                    lovColumn);
+
+                CommonViewModel.IsSuccess = IsSuccess;
+                CommonViewModel.IsConfirm = true;
+                CommonViewModel.StatusCode = IsSuccess ? ResponseStatusCode.Success : ResponseStatusCode.Error;
+                CommonViewModel.Message = Message;
+                CommonViewModel.Data = Id;
+            }
+            catch (Exception ex)
+            {
+                LogError(ex, new { lovColumn});
+
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                CommonViewModel.Message = ex.Message;
+
+
+            }
+            return Ok(CommonViewModel);
+        }
+
+
         private void LogError(Exception ex, object payload)
         {
             string actionName = ControllerContext.RouteData.Values["action"]?.ToString();

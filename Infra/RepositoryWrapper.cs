@@ -150,12 +150,13 @@ namespace Champerof.Infra
      }).ToList();
                 }
 
-                var pagedData = list.Skip(start).Take(length).ToList();
+                //var pagedData = list.Skip(start).Take(length).ToList();
+                var pagedData = list.ToList();
 
                 return new PagedResult<T>
                 {
-                    StartIndex = start,
-                    Length = length,
+                  //  StartIndex = start,
+                  //  Length = length,
                     RecordsFiltered = list.Count,
                     RecordsTotal = recordsTotal,
                     Data = pagedData
