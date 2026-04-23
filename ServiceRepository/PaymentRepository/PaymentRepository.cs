@@ -47,7 +47,7 @@ namespace Champerof.ServiceRepository.PaymentRepository
                 new SqlParameter("@InvoiceId", model.InvoiceId ?? (object)DBNull.Value),
                 new SqlParameter("@PaymentDate", model.PaymentDate ?? (object)DBNull.Value),
                 new SqlParameter("@Amount", model.Amount ?? (object)DBNull.Value),
-                new SqlParameter("@AdvanvePayment", model.AdvanvePayment ??(object) DBNull.Value),
+                new SqlParameter("@AdvanvePayment", model.AdvancePayment ??(object) DBNull.Value),
                 new SqlParameter("@PaymentMode", model.PaymentMode ?? (object)DBNull.Value),
                 new SqlParameter("@ReferenceNo", model.ReferenceNo ?? (object)DBNull.Value),
                 new SqlParameter("@Notes", model.Notes ?? (object)DBNull.Value),
@@ -83,6 +83,33 @@ namespace Champerof.ServiceRepository.PaymentRepository
             };
 
             var result = _repositoryBase.ExecuteStoredProcedurenew("sp_Payment_Delete", parameters, true);
+
+            return await Task.FromResult(result);
+        }
+
+
+        public async Task<PagedResult<Payments>> AdvancePaymentHistory(
+    int start,
+    int length,
+    string sortColumn,
+    string sortColumnDir,
+    string searchValue, long AdvancePaymentId)
+        {
+            //  SqlParameter[] parameters = null;
+            SqlParameter[] parameters = new SqlParameter[]
+      {
+        new SqlParameter("@AdvanceId", AdvancePaymentId)
+      };
+
+            var result = _repositoryBase.ExecuteWithPagination(
+                "sp_PaymentHistoryByAdvanceID_Get",
+                parameters,
+                start,
+                length,
+                sortColumn,
+                sortColumnDir,
+                searchValue
+            );
 
             return await Task.FromResult(result);
         }

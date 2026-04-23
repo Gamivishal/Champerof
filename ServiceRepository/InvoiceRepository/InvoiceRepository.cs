@@ -93,9 +93,12 @@ namespace Champerof.ServiceRepository.InvoiceRepository
 
         public async Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> AddOrUpdateInvoiceCombo(InvoiceCombo model)
         {
-            var itemsJson = Newtonsoft.Json.JsonConvert.SerializeObject(model.Items);
+            try
 
-            List<SqlParameter> oParams = new()
+            {
+                var itemsJson = Newtonsoft.Json.JsonConvert.SerializeObject(model.Items);
+
+                List<SqlParameter> oParams = new()
     {
         new SqlParameter("@InvoiceId", model.Invoice.InvoiceId),
         new SqlParameter("@ClientId", model.Invoice.ClientId ?? (object)DBNull.Value),
@@ -114,10 +117,15 @@ namespace Champerof.ServiceRepository.InvoiceRepository
         new SqlParameter("@Operated_By", AppHttpContextAccessor.JwtUserId),
         new SqlParameter("@Action", model.Invoice.InvoiceId == 0 ? "INSERT" : "UPDATE")
     };
+                Console.WriteLine($"InvoiceId: {model.Invoice.InvoiceId}");
+                var result = _repositoryBase.ExecuteStoredProcedurenew("sp_Invoicesavecombo_Save", oParams, true);
 
-            var result = _repositoryBase.ExecuteStoredProcedurenew("sp_InvoiceCombo_Save", oParams, true);
-
-            return await Task.FromResult(result);
+                return await Task.FromResult(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<InvoiceCombo?> GetInvoiceWithItems(long id)

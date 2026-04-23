@@ -46,6 +46,9 @@ namespace Champerof.ServiceRepository.AdvancePaymentRepository
                 new SqlParameter("@TotalAmount", model.TotalAmount ?? (object)DBNull.Value),
                 new SqlParameter("@RemainingAmount", model.RemainingAmount ?? (object)DBNull.Value),
                 new SqlParameter("@Status", model.Status ?? (object)DBNull.Value),
+                        new SqlParameter("@PaymentDate", model.PaymentDate ?? (object)DBNull.Value),
+        new SqlParameter("@PaymentMode", model.PaymentMode ?? (object)DBNull.Value),
+        new SqlParameter("@Remark", model.Remark ?? (object)DBNull.Value),
                 new SqlParameter("@Operated_By", AppHttpContextAccessor.JwtUserId),
                 new SqlParameter("@Action", model.Id == 0 ? "INSERT" : "UPDATE")
             };

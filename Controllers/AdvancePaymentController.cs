@@ -1,6 +1,7 @@
 ﻿using Champerof.Infra;
 using Champerof.Models;
 using Champerof.ServiceRepository.AdvancePaymentRepository;
+using Champerof.ServiceRepository.PaymentRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,13 @@ namespace Champerof.Controllers
         private readonly IAdvancePaymentRepository _repository;
         private readonly CommonViewModel CommonViewModel = new();
         private readonly ValidationService _validation;
+        private readonly IPaymentRepository _payment;
 
-        public AdvancePaymentController(IAdvancePaymentRepository repository, ValidationService validation)
+        public AdvancePaymentController(IAdvancePaymentRepository repository, ValidationService validation,IPaymentRepository payment)
         {
             _repository = repository;
             _validation = validation;
+            _payment = payment;
         }
 
         [HttpGet("[Action]")]
@@ -26,6 +29,20 @@ namespace Champerof.Controllers
         public async Task<IActionResult> GetAllpage(int start = 0, int length = 10, string sortColumn = "", string sortColumnDir = "asc", string searchValue = "")
         {
             var data = await _repository.GetAllAdvancePayments(start, length, sortColumn, sortColumnDir, searchValue);
+
+            CommonViewModel.IsSuccess = true;
+            CommonViewModel.StatusCode = ResponseStatusCode.Success;
+            CommonViewModel.Data = data;
+
+            return Ok(CommonViewModel);
+        }
+
+
+        [HttpGet("[Action]")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AdvancePaymentHistory(int start = 0, int length = 10, string sortColumn = "", string sortColumnDir = "asc", string searchValue = "", long AdvancePaymentId=0)
+        {
+            var data = await _payment.AdvancePaymentHistory(start, length, sortColumn, sortColumnDir, searchValue, AdvancePaymentId);
 
             CommonViewModel.IsSuccess = true;
             CommonViewModel.StatusCode = ResponseStatusCode.Success;

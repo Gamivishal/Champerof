@@ -45,6 +45,16 @@ namespace Champerof.Controllers
             var mobileValidation = _validation.ValidateMobile(client.Phone);
             if (!mobileValidation.IsSuccess) { return Ok(mobileValidation); }
 
+            var City = _validation.ValidateRequired(client.City, "City Name");
+            if (!City.IsSuccess) return Ok(City);
+
+            var State = _validation.ValidateRequired(client.State, "State Name");
+            if (!State.IsSuccess) return Ok(State);
+
+            var Pincode = _validation.ValidateRequired(client.Pincode, "State Name");
+            if (!Pincode.IsSuccess) return Ok(Pincode);
+
+
             var (IsSuccess, Message, Id, Extra) = await _clientRepository.AddOrUpdateClient(client);
 
             CommonViewModel.IsSuccess = IsSuccess;

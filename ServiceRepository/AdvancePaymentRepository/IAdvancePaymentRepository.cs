@@ -12,5 +12,7 @@ namespace Champerof.ServiceRepository.AdvancePaymentRepository
         Task<AdvancePayment?> GetAdvancePaymentById(long id);
 
         Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> DeleteAdvancePayment(long id);
+
+
     }
 }

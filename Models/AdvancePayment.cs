@@ -13,7 +13,9 @@ namespace Champerof.Models
         public decimal? TotalAmount { get; set; }
         public decimal? RemainingAmount { get; set; }
         public string? Status { get; set; }
-
+        public DateTime? PaymentDate { get; set; }
+        public string? PaymentMode { get; set; }
+        public string? Remark { get; set; }
         // From JOIN
         [NotMapped] public string? ClientName { get; set; }
         [NotMapped] public string? StatusName { get; set; }

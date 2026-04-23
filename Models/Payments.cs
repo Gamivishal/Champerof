@@ -24,7 +24,8 @@ namespace Champerof.Models
         [NotMapped] public string? ClientName { get; set; }
         [NotMapped] public string? InvoiceNumber { get; set; }
         [NotMapped] public string? PaymentModeName { get; set; }
-        [NotMapped] public decimal? AdvanvePayment { get; set; }
+        //[NotMapped] public decimal? AdvanvePayment { get; set; }
+        public decimal? AdvancePayment { get; set; }
 
         public long? Advance_ID { get; set; }
         public bool? IS_Advance { get; set; }

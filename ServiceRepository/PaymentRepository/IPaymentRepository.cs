@@ -12,5 +12,7 @@ namespace Champerof.ServiceRepository.PaymentRepository
         Task<Payments?> GetPaymentById(long id);
 
         Task<(bool IsSuccess, string Message, long Id, List<string> Extra)> DeletePayment(long id);
+
+        Task<PagedResult<Payments>> AdvancePaymentHistory(int start, int length, string sortColumn, string sortColumnDir, string searchValue,long AdvancePaymentId);
     }
 }

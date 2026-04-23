@@ -9,6 +9,7 @@ namespace Champerof.Models
         [Key]
         public long InvoiceId { get; set; }
         public long? ClientId { get; set; }
+    
         public string? InvoiceNumber { get; set; }
         public DateTime? InvoiceDate { get; set; }
         public DateTime? DueDate { get; set; }
@@ -26,6 +27,13 @@ namespace Champerof.Models
         [NotMapped] public decimal? RemainingAmount { get; set; }
         [NotMapped] public decimal? PaidAmount { get; set; }
         [NotMapped] public decimal? PendingAmount { get; set; }
+        [NotMapped] public long? Advance_ID { get; set; }
+        [NotMapped] public DateTime? PaymentDate { get; set; }
+        [NotMapped]public string? City { get; set; }
+      [NotMapped]  public string? State { get; set; }
+      [NotMapped]  public string? Pincode { get; set; }
+      [NotMapped]  public string? Address { get; set; }
+
 
         public bool? IsActive { get; set; }
         public bool? IsDeleted { get; set; }

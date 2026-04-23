@@ -60,6 +60,7 @@ namespace Champerof.Controllers
         [HttpPost("[Action]")]
         public async Task<IActionResult> Add(PaymentFollowUp model)
         {
+            var now = DateTime.Now;
             if (model.InvoiceId == null || model.InvoiceId <= 0)
             {
                 CommonViewModel.IsSuccess = false;
@@ -67,11 +68,48 @@ namespace Champerof.Controllers
                 CommonViewModel.StatusCode = ResponseStatusCode.Error;
                 return Ok(CommonViewModel);
             }
-
-            if (string.IsNullOrWhiteSpace(model.Status))
+            if (model.DueDate == null)
             {
                 CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Status is required";
+                CommonViewModel.Message = "Due Date is required";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
+            if (model.DueDate <= now)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Due Date must be a future date";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
+
+            if (model.NextFollowUpDate == null)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Next FollowUp Date is required";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
+            if (model.NextFollowUpDate <= now)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Next FollowUp Date must be a future date";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
+
+            if (model.NextFollowUpDate >= model.DueDate)
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Next FollowUp Date must be earlier than Due Date";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
+
+            if (string.IsNullOrWhiteSpace(model.Remark))
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Remark is required";
                 CommonViewModel.StatusCode = ResponseStatusCode.Error;
                 return Ok(CommonViewModel);
             }

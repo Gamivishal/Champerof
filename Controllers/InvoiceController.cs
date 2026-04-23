@@ -94,123 +94,143 @@ namespace Champerof.Controllers
         {
 
 
-            //if (model.Items == null || model.Items.Count == 0)
-            //{
-            //    CommonViewModel.IsSuccess = false;
-            //    CommonViewModel.Message = "At least one item is required";
-            //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
-            //    return Ok(CommonViewModel);
-            //}
-
-            //if (model.Invoice == null)
-            //{
-            //    CommonViewModel.IsSuccess = false;
-            //    CommonViewModel.Message = "Invoice data is required";
-            //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
-            //    return Ok(CommonViewModel);
-            //}
-            if(model.Items == null || model.Items.Count == 0)
+            try
             {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "At least one item is required";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
+                if (model.Items == null || model.Items.Count == 0)
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "At least one item is required";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
 
-            if (model.Invoice.ClientId == null || model.Invoice.ClientId <= 0)
+                if (model.Invoice.ClientId == null || model.Invoice.ClientId <= 0)
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Client is required";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+
+                if (string.IsNullOrWhiteSpace(model.Invoice.InvoiceNumber))
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Invoice number is required";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+
+                if (model.Invoice.InvoiceDate == null)
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Invoice date is required";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+                else if (model.Invoice.InvoiceDate > DateTime.Now)
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Invoice date must be in the past";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+
+                if (model.Invoice.DueDate == null)
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Due date is required";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+                else if (model.Invoice.DueDate <= DateTime.Now)
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Due date must be in the future";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+
+                if (model.Invoice.SubTotal == null || model.Invoice.SubTotal < 0)
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Subtotal must be valid";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+
+                if (model.Invoice.Discount == null || model.Invoice.Discount < 0)
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Discount must be valid";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+
+                //if (model.Invoice.TaxAmount == null || model.Invoice.TaxAmount < 0)
+                //{
+                //    CommonViewModel.IsSuccess = false;
+                //    CommonViewModel.Message = "Tax amount must be valid";
+                //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                //    return Ok(CommonViewModel);
+                //}
+
+                if (model.Invoice.FinalAmount == null || model.Invoice.FinalAmount < 0)
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Final amount must be valid";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+
+                if (string.IsNullOrWhiteSpace(model.Invoice.Status))
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Status is required";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+
+                var (IsSuccess, Message, Id, Extra) = await _invoiceRepository.AddOrUpdateInvoiceCombo(model);
+
+                CommonViewModel.IsSuccess = IsSuccess;
+                CommonViewModel.IsConfirm = true;
+                CommonViewModel.StatusCode = IsSuccess ? ResponseStatusCode.Success : ResponseStatusCode.Error;
+                CommonViewModel.Message = Message;
+                CommonViewModel.Data = Id;
+
+               
+            }
+            catch (Exception ex)
             {
+                string actionName = ControllerContext.RouteData.Values["action"]?.ToString();
+                string controllerName = ControllerContext.RouteData.Values["controller"]?.ToString();
+                string requestUrl = $"{Request?.Scheme}://{Request?.Host}{Request?.Path}{Request?.QueryString}";
+                string userAgent = Request?.Headers["User-Agent"].ToString(); //broser name and servion
+                string clientIp = HttpContext.Connection?.RemoteIpAddress?.ToString();
+                string requestPayload = System.Text.Json.JsonSerializer.Serialize(model);
+                long? userId = AppHttpContextAccessor.JwtUserId;
+                var log = new ErrorLog
+                {
+                    ApplicationName = AppHttpContextAccessor.ApplicationName,
+                    ControllerName = controllerName + "_" + actionName,
+                    ErrorMessage = ex.Message,
+                    ErrorType = ex.GetType().FullName,
+                    StackTrace = ex.ToString(),
+                    RequestUrl = requestUrl,
+                    RequestPayload = requestPayload,
+                    UserAgent = userAgent,
+                    UserId = userId,
+                    ClientIP = clientIp,
+
+                    CreatedBy = User?.Identity?.Name
+                };
+
+                LogEntry.InsertLogEntry(log);
                 CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Client is required";
                 CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
+                CommonViewModel.Message = ex.Message;
+                //  return Ok(CommonViewModel);
             }
-
-            if (string.IsNullOrWhiteSpace(model.Invoice.InvoiceNumber))
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Invoice number is required";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
-
-            if (model.Invoice.InvoiceDate == null)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Invoice date is required";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
-            else if (model.Invoice.InvoiceDate > DateTime.Now)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Invoice date must be in the past";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
-
-            if (model.Invoice.DueDate == null)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Due date is required";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
-            else if (model.Invoice.DueDate <= DateTime.Now)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Due date must be in the future";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
-
-            if (model.Invoice.SubTotal == null || model.Invoice.SubTotal < 0)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Subtotal must be valid";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
-
-            if (model.Invoice.Discount == null || model.Invoice.Discount < 0)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Discount must be valid";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
-
-            //if (model.Invoice.TaxAmount == null || model.Invoice.TaxAmount < 0)
-            //{
-            //    CommonViewModel.IsSuccess = false;
-            //    CommonViewModel.Message = "Tax amount must be valid";
-            //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
-            //    return Ok(CommonViewModel);
-            //}
-
-            if (model.Invoice.FinalAmount == null || model.Invoice.FinalAmount < 0)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Final amount must be valid";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
-
-            if (string.IsNullOrWhiteSpace(model.Invoice.Status))
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Status is required";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
-
-            var (IsSuccess, Message, Id, Extra) = await _invoiceRepository.AddOrUpdateInvoiceCombo(model);
-
-            CommonViewModel.IsSuccess = IsSuccess;
-            CommonViewModel.IsConfirm = true;
-            CommonViewModel.StatusCode = IsSuccess ? ResponseStatusCode.Success : ResponseStatusCode.Error;
-            CommonViewModel.Message = Message;
-            CommonViewModel.Data = Id;
-
             return Ok(CommonViewModel);
         }
 

@@ -47,6 +47,12 @@ namespace Champerof.ServiceRepository.ClientRepository
                 new SqlParameter("@Phone", client.Phone ?? (object)DBNull.Value),
                 new SqlParameter("@GSTNumber", client.GSTNumber ?? (object)DBNull.Value),
                 new SqlParameter("@Address", client.Address ?? (object)DBNull.Value),
+
+                    // ✅ NEW PARAMETERS
+    new SqlParameter("@City", client.City ?? (object)DBNull.Value),
+    new SqlParameter("@State", client.State ?? (object)DBNull.Value),
+    new SqlParameter("@Pincode", client.Pincode ?? (object)DBNull.Value),
+
                 new SqlParameter("@Operated_By", AppHttpContextAccessor.JwtUserId),
                 new SqlParameter("@Action", client.ClientId == 0 ? "INSERT" : "UPDATE")
             };
