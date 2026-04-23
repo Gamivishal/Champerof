@@ -11,7 +11,7 @@ namespace Champerof.Models
 
         public long? InvoiceId { get; set; }
         public long? ServiceId { get; set; }
-        public string? ItemType { get; set; }
+      //  public string? ItemType { get; set; }
         public string? Description { get; set; }
         public int? Quantity { get; set; }
         public decimal? Rate { get; set; }

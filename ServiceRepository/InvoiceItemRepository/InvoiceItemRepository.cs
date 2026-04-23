@@ -35,7 +35,7 @@ namespace Champerof.ServiceRepository.InvoiceItemRepository
                 new SqlParameter("@ItemId", model.ItemId),
                 new SqlParameter("@InvoiceId", model.InvoiceId ?? (object)DBNull.Value),
                 new SqlParameter("@ServiceId", model.ServiceId ?? (object)DBNull.Value),
-                new SqlParameter("@ItemType", model.ItemType ?? (object)DBNull.Value),
+              //  new SqlParameter("@ItemType", model.ItemType ?? (object)DBNull.Value),
                 new SqlParameter("@Description", model.Description ?? (object)DBNull.Value),
                 new SqlParameter("@Quantity", model.Quantity ?? (object)DBNull.Value),
                 new SqlParameter("@Rate", model.Rate ?? (object)DBNull.Value),

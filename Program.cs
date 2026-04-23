@@ -22,6 +22,7 @@ using Champerof.ServiceRepository.InvoiceItemRepository;
 using Champerof.ServiceRepository.PaymentFollowUpRepository;
 using Champerof.ServiceRepository.TermsRepository;
 using Champerof.ServiceRepository.CompanyRepository;
+using Champerof.ServiceRepository.InvoiceReportRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -125,7 +126,8 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IInvoiceItemRepository, InvoiceItemRepository>();
 builder.Services.AddScoped<IPaymentFollowUpRepository,PaymentFollowUpRepository>();
 builder.Services.AddScoped<ITermsRepository,TermsRepository>();
-builder.Services.AddScoped<ICompanyRepository,CompanyRepository>();
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IInvoiceReportRepository,InvoiceReportRepository>();
 
 
 

@@ -110,6 +110,7 @@ namespace Champerof.ServiceRepository.InvoiceRepository
         new SqlParameter("@TaxAmount", model.Invoice.TaxAmount ?? (object)DBNull.Value),
         new SqlParameter("@FinalAmount", model.Invoice.FinalAmount ?? (object)DBNull.Value),
         new SqlParameter("@Status", model.Invoice.Status ?? (object)DBNull.Value),
+        new SqlParameter("@InvoiceType", model.Invoice.InvoiceType ?? (object)DBNull.Value),
         new SqlParameter("@Notes", model.Invoice.Notes ?? (object)DBNull.Value),
 
         new SqlParameter("@Items", itemsJson),  // 🔥 JSON
