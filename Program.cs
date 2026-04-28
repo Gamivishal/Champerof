@@ -155,7 +155,7 @@ app.UseSwagger(); // for live index
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "CommmonProject v1");
-   // c.RoutePrefix = string.Empty; // ?? IMPORTANT
+ //   c.RoutePrefix = string.Empty; // ?? IMPORTANT
 });
 
 

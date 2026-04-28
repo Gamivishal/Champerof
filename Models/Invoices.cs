@@ -34,6 +34,7 @@ namespace Champerof.Models
       [NotMapped]  public string? State { get; set; }
       [NotMapped]  public string? Pincode { get; set; }
       [NotMapped]  public string? Address { get; set; }
+      [NotMapped]  public string? InvoiceTypeName { get; set; }
 
 
         public bool? IsActive { get; set; }
