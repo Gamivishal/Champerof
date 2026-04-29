@@ -51,8 +51,20 @@ namespace Champerof.Controllers
             var State = _validation.ValidateRequired(client.State, "State Name");
             if (!State.IsSuccess) return Ok(State);
 
-            var Pincode = _validation.ValidateRequired(client.Pincode, "State Name");
+            var Pincode = _validation.ValidateRequired(client.Pincode, "Pin Code");
             if (!Pincode.IsSuccess) return Ok(Pincode);
+            
+            
+                if (string.IsNullOrWhiteSpace(client.Pincode)
+    || !System.Text.RegularExpressions.Regex.IsMatch(client.Pincode, @"^\d{6}$"))
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.Message = "Pincode must be exactly 6 digits";
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    return Ok(CommonViewModel);
+                }
+           
+
 
 
             var (IsSuccess, Message, Id, Extra) = await _clientRepository.AddOrUpdateClient(client);

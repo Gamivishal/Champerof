@@ -104,13 +104,14 @@ namespace Champerof.ServiceRepository.InvoiceRepository
         new SqlParameter("@ClientId", model.Invoice.ClientId ?? (object)DBNull.Value),
         new SqlParameter("@InvoiceNumber", model.Invoice.InvoiceNumber ?? (object)DBNull.Value),
         new SqlParameter("@InvoiceDate", model.Invoice.InvoiceDate ?? (object)DBNull.Value),
-        new SqlParameter("@DueDate", model.Invoice.DueDate ?? (object)DBNull.Value),
+     //   new SqlParameter("@DueDate", model.Invoice.DueDate ?? (object)DBNull.Value),
         new SqlParameter("@SubTotal", model.Invoice.SubTotal ?? (object)DBNull.Value),
         new SqlParameter("@Discount", model.Invoice.Discount ?? (object)DBNull.Value),
         new SqlParameter("@TaxAmount", model.Invoice.TaxAmount ?? (object)DBNull.Value),
         new SqlParameter("@FinalAmount", model.Invoice.FinalAmount ?? (object)DBNull.Value),
         new SqlParameter("@Status", model.Invoice.Status ?? (object)DBNull.Value),
         new SqlParameter("@InvoiceType", model.Invoice.InvoiceType ?? (object)DBNull.Value),
+        new SqlParameter("@DueDays", model.Invoice.Duedays ?? (object)DBNull.Value),
         new SqlParameter("@Notes", model.Invoice.Notes ?? (object)DBNull.Value),
 
         new SqlParameter("@Items", itemsJson),  // 🔥 JSON

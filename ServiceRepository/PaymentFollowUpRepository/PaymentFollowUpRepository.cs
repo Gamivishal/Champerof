@@ -59,8 +59,10 @@ namespace Champerof.ServiceRepository.PaymentFollowUpRepository
             {
                 new SqlParameter("@Id", model.Id),
                 new SqlParameter("@InvoiceId", model.InvoiceId ?? (object)DBNull.Value),
-                new SqlParameter("@DueDate", model.DueDate ?? (object)DBNull.Value),
+             //   new SqlParameter("@DueDate", model.DueDate ?? (object)DBNull.Value),
                 new SqlParameter("@FollowUpDate", model.FollowUpDate ?? (object)DBNull.Value),
+                 new SqlParameter("@DueDays", string.IsNullOrWhiteSpace(model.DueDays) ? (object)DBNull.Value : model.DueDays),
+
                 new SqlParameter("@NextFollowUpDate", model.NextFollowUpDate ?? (object)DBNull.Value),
                 new SqlParameter("@Status", model.Status ?? (object)DBNull.Value),
                 new SqlParameter("@Remark", model.Remark ?? (object)DBNull.Value),
@@ -134,7 +136,7 @@ namespace Champerof.ServiceRepository.PaymentFollowUpRepository
             {
                 new SqlParameter("@Id", model.Id),
                 new SqlParameter("@InvoiceId", model.InvoiceId ?? (object)DBNull.Value),
-                new SqlParameter("@DueDate", model.DueDate ?? (object)DBNull.Value),
+             //   new SqlParameter("@DueDate", model.DueDate ?? (object)DBNull.Value),
                 new SqlParameter("@FollowUpDate", model.FollowUpDate ?? (object)DBNull.Value),
                 new SqlParameter("@NextFollowUpDate", model.NextFollowUpDate ?? (object)DBNull.Value),
                 //new SqlParameter("@Status", model.Status ?? (object)DBNull.Value),

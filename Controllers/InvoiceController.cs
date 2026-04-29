@@ -96,13 +96,7 @@ namespace Champerof.Controllers
 
             try
             {
-                if (model.Items == null || model.Items.Count == 0)
-                {
-                    CommonViewModel.IsSuccess = false;
-                    CommonViewModel.Message = "At least one item is required";
-                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                    return Ok(CommonViewModel);
-                }
+               
 
                 if (model.Invoice.ClientId == null || model.Invoice.ClientId <= 0)
                 {
@@ -134,21 +128,27 @@ namespace Champerof.Controllers
                     CommonViewModel.StatusCode = ResponseStatusCode.Error;
                     return Ok(CommonViewModel);
                 }
-
-                if (model.Invoice.DueDate == null)
+                if (model.Items == null || model.Items.Count == 0)
                 {
                     CommonViewModel.IsSuccess = false;
-                    CommonViewModel.Message = "Due date is required";
+                    CommonViewModel.Message = "At least one item is required";
                     CommonViewModel.StatusCode = ResponseStatusCode.Error;
                     return Ok(CommonViewModel);
                 }
-                else if (model.Invoice.DueDate <= DateTime.Now)
-                {
-                    CommonViewModel.IsSuccess = false;
-                    CommonViewModel.Message = "Due date must be in the future";
-                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                    return Ok(CommonViewModel);
-                }
+                //if (model.Invoice.DueDate == null)
+                //{
+                //    CommonViewModel.IsSuccess = false;
+                //    CommonViewModel.Message = "Due date is required";
+                //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                //    return Ok(CommonViewModel);
+                //}
+                //else if (model.Invoice.DueDate <= DateTime.Now)
+                //{
+                //    CommonViewModel.IsSuccess = false;
+                //    CommonViewModel.Message = "Due date must be in the future";
+                //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                //    return Ok(CommonViewModel);
+                //}
 
                 if (model.Invoice.SubTotal == null || model.Invoice.SubTotal < 0)
                 {

@@ -59,9 +59,11 @@ namespace Champerof.ServiceRepository.UserRepository
             {
                 List<SqlParameter> oParams = new();
 
+                string encryptedPassword = Common.Encrypt(user.Password ?? "");
+
                 oParams.Add(new SqlParameter("@UserId", user.Id));
                 oParams.Add(new SqlParameter("@Username", user.UserName ?? (object)DBNull.Value));
-                oParams.Add(new SqlParameter("@Password_hash", user.Password ?? (object)DBNull.Value));
+                oParams.Add(new SqlParameter("@Password_hash", encryptedPassword));
                 oParams.Add(new SqlParameter("@Mobile_No", user.MobileNumber ?? (object)DBNull.Value));
                 oParams.Add(new SqlParameter("@Email_id", user.Email ?? (object)DBNull.Value));
                 oParams.Add(new SqlParameter("@Operated_By", AppHttpContextAccessor.JwtUserId));

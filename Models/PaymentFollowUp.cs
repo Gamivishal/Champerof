@@ -10,8 +10,10 @@ namespace Champerof.Models
         public long Id { get; set; }
 
         public long? InvoiceId { get; set; }
-        public DateTime? DueDate { get; set; }
-        public DateTime? FollowUpDate { get; set; }
+       //
+       public DateTime? DueDate { get; set; }
+          public DateTime? FollowUpDate { get; set; }
+        public string? DueDays { get; set; }
         public DateTime? NextFollowUpDate { get; set; }
         public string? Status { get; set; }
         public string? Remark { get; set; }

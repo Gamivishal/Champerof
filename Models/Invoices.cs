@@ -19,6 +19,7 @@ namespace Champerof.Models
         public decimal? FinalAmount { get; set; }
         public string? Status { get; set; }
         public string? InvoiceType { get; set; }
+        public string? Duedays { get; set; }
         public string? Notes { get; set; }
 
         // From JOIN

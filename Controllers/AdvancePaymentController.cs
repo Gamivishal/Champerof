@@ -66,11 +66,18 @@ namespace Champerof.Controllers
             if (model.TotalAmount == null || model.TotalAmount <= 0)
             {
                 CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Total amount is required";
+                CommonViewModel.Message = "Paid amount is required";
                 CommonViewModel.StatusCode = ResponseStatusCode.Error;
                 return Ok(CommonViewModel);
             }
 
+            if (string.IsNullOrWhiteSpace(model.PaymentMode))
+            {
+                CommonViewModel.IsSuccess = false;
+                CommonViewModel.Message = "Payment mode is required";
+                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                return Ok(CommonViewModel);
+            }
 
             var (IsSuccess, Message, Id, Extra) = await _repository.AddOrUpdateAdvancePayment(model);
 

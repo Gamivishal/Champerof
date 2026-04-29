@@ -68,20 +68,20 @@ namespace Champerof.Controllers
                 CommonViewModel.StatusCode = ResponseStatusCode.Error;
                 return Ok(CommonViewModel);
             }
-            if (model.DueDate == null)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Due Date is required";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
-            if (model.DueDate <= now)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Due Date must be a future date";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
+            //if (model.DueDate == null)
+            //{
+            //    CommonViewModel.IsSuccess = false;
+            //    CommonViewModel.Message = "Due Date is required";
+            //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+            //    return Ok(CommonViewModel);
+            //}
+            //if (model.DueDate <= now)
+            //{
+            //    CommonViewModel.IsSuccess = false;
+            //    CommonViewModel.Message = "Due Date must be a future date";
+            //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+            //    return Ok(CommonViewModel);
+            //}
 
             if (model.NextFollowUpDate == null)
             {
@@ -98,13 +98,13 @@ namespace Champerof.Controllers
                 return Ok(CommonViewModel);
             }
 
-            if (model.NextFollowUpDate >= model.DueDate)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Next FollowUp Date must be earlier than Due Date";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
+            //if (model.NextFollowUpDate >= model.DueDate)
+            //{
+            //    CommonViewModel.IsSuccess = false;
+            //    CommonViewModel.Message = "Next FollowUp Date must be earlier than Due Date";
+            //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+            //    return Ok(CommonViewModel);
+            //}
 
             if (string.IsNullOrWhiteSpace(model.Remark))
             {
@@ -189,20 +189,20 @@ namespace Champerof.Controllers
                 CommonViewModel.StatusCode = ResponseStatusCode.Error;
                 return Ok(CommonViewModel);
             }
-            if (model.DueDate == null)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Due Date is required";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
-            if (model.DueDate <= now)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Due Date must be a future date";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
+            //if (model.DueDate == null)
+            //{
+            //    CommonViewModel.IsSuccess = false;
+            //    CommonViewModel.Message = "Due Date is required";
+            //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+            //    return Ok(CommonViewModel);
+            //}
+            //if (model.DueDate <= now)
+            //{
+            //    CommonViewModel.IsSuccess = false;
+            //    CommonViewModel.Message = "Due Date must be a future date";
+            //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+            //    return Ok(CommonViewModel);
+            //}
 
             if (model.NextFollowUpDate == null)
             {
@@ -219,13 +219,13 @@ namespace Champerof.Controllers
                 return Ok(CommonViewModel);
             }  
 
-            if (model.NextFollowUpDate >= model.DueDate)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.Message = "Next FollowUp Date must be earlier than Due Date";
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                return Ok(CommonViewModel);
-            }
+            //if (model.NextFollowUpDate >= model.DueDate)
+            //{
+            //    CommonViewModel.IsSuccess = false;
+            //    CommonViewModel.Message = "Next FollowUp Date must be earlier than Due Date";
+            //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+            //    return Ok(CommonViewModel);
+            //}
 
             if (string.IsNullOrWhiteSpace(model.Remark))
             {
