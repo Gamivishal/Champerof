@@ -37,6 +37,8 @@ namespace Champerof.Controllers
         [HttpPost("[Action]")]
         public async Task<IActionResult> Add(Payments model)
         {
+            var indiaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+            var indiaToday = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, indiaTimeZone).Date;
             if (model.ClientId == null || model.ClientId <= 0)
             {
                 CommonViewModel.IsSuccess = false;
@@ -60,7 +62,7 @@ namespace Champerof.Controllers
                 CommonViewModel.StatusCode = ResponseStatusCode.Error;
                 return Ok(CommonViewModel);
             }
-            else if (model.PaymentDate.Value.Date > DateTime.Today)
+            else if (model.PaymentDate.Value.Date > indiaToday)
             {
                 CommonViewModel.IsSuccess = false;
                 CommonViewModel.Message = "Payment date cannot be in the future";
@@ -68,7 +70,7 @@ namespace Champerof.Controllers
                 return Ok(CommonViewModel);
             }
 
-            
+
 
             if (model.IS_Advance == false)
             {

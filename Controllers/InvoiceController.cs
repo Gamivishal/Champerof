@@ -96,8 +96,9 @@ namespace Champerof.Controllers
 
             try
             {
-               
 
+                var indiaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                var indiaToday = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, indiaTimeZone).Date;
                 if (model.Invoice.ClientId == null || model.Invoice.ClientId <= 0)
                 {
                     CommonViewModel.IsSuccess = false;
@@ -121,7 +122,7 @@ namespace Champerof.Controllers
                     CommonViewModel.StatusCode = ResponseStatusCode.Error;
                     return Ok(CommonViewModel);
                 }
-                else if (model.Invoice.InvoiceDate > DateTime.Now)
+                else if (model.Invoice.InvoiceDate > indiaToday)
                 {
                     CommonViewModel.IsSuccess = false;
                     CommonViewModel.Message = "Invoice date must be in the past";

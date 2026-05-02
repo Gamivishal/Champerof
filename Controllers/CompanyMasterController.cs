@@ -3,7 +3,8 @@ using Champerof.Models;
 using Champerof.ServiceRepository.CompanyRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Text.RegularExpressions;
+using System;
 namespace Champerof.Controllers
 {
     [Route("api/[controller]")]
@@ -54,6 +55,14 @@ namespace Champerof.Controllers
                 var res = _validation.ValidateRequired(dto.AccountNo, "Account No");
                 if (!res.IsSuccess) return Ok(res);
 
+                if (!System.Text.RegularExpressions.Regex.IsMatch(dto.AccountNo, @"^\d{9,18}$"))
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    CommonViewModel.Message = "Account number must be between 9 to 18 digits";
+                    return Ok(CommonViewModel);
+                }
+
                 res = _validation.ValidateRequired(dto.AccountName, "Account Name");
                 if (!res.IsSuccess) return Ok(res);
 
@@ -63,8 +72,40 @@ namespace Champerof.Controllers
                 res = _validation.ValidateRequired(dto.IFSCCode, "IFSC Code");
                 if (!res.IsSuccess) return Ok(res);
 
-                res = _validation.ValidateRequired(dto.PAN, "PAN");
-                if (!res.IsSuccess) return Ok(res);
+                dto.IFSCCode = dto.IFSCCode.ToUpper();
+
+                // Validate IFSC format
+                if (!System.Text.RegularExpressions.Regex.IsMatch(dto.IFSCCode, @"^[A-Z]{4}0[A-Z0-9]{6}$"))
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    CommonViewModel.Message = "Invalid IFSC code format";
+                    return Ok(CommonViewModel);
+                }
+                //res = _validation.ValidateRequired(dto.PAN, "PAN");
+                //if (!res.IsSuccess) return Ok(res);
+
+
+                //  
+
+                if (string.IsNullOrWhiteSpace(dto.PAN))
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    CommonViewModel.Message = "Please enter PAN number";
+                    return Ok(CommonViewModel);
+                }
+
+                var panRegex = new Regex(@"^[A-Z]{5}[0-9]{4}[A-Z]{1}$");
+
+                if (!panRegex.IsMatch(dto.PAN))
+                {
+                    CommonViewModel.IsSuccess = false;
+                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+                    CommonViewModel.Message = "Invalid PAN format";
+                    return Ok(CommonViewModel);
+                }
+
 
                 res = _validation.ValidateMobile(dto.Mobile);
                 if (!res.IsSuccess) return Ok(res);
