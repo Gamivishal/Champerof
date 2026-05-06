@@ -39,30 +39,30 @@ namespace Champerof.Controllers
             var validation = _validation.ValidateRequired(client.ClientName, "Client Name");
             if (!validation.IsSuccess) return Ok(validation);
 
-            var email = _validation.ValidateEmail(client.Email);
-            if (!email.IsSuccess) return Ok(email);
+            //var email = _validation.ValidateEmail(client.Email);
+            //if (!email.IsSuccess) return Ok(email);
 
-            var mobileValidation = _validation.ValidateMobile(client.Phone);
-            if (!mobileValidation.IsSuccess) { return Ok(mobileValidation); }
+            //var mobileValidation = _validation.ValidateMobile(client.Phone);
+            //if (!mobileValidation.IsSuccess) { return Ok(mobileValidation); }
 
-            var City = _validation.ValidateRequired(client.City, "City Name");
-            if (!City.IsSuccess) return Ok(City);
+            //var City = _validation.ValidateRequired(client.City, "City Name");
+            //if (!City.IsSuccess) return Ok(City);
 
-            var State = _validation.ValidateRequired(client.State, "State Name");
-            if (!State.IsSuccess) return Ok(State);
+            //var State = _validation.ValidateRequired(client.State, "State Name");
+            //if (!State.IsSuccess) return Ok(State);
 
-            var Pincode = _validation.ValidateRequired(client.Pincode, "Pin Code");
-            if (!Pincode.IsSuccess) return Ok(Pincode);
+            //var Pincode = _validation.ValidateRequired(client.Pincode, "Pin Code");
+            //if (!Pincode.IsSuccess) return Ok(Pincode);
             
             
-                if (string.IsNullOrWhiteSpace(client.Pincode)
-    || !System.Text.RegularExpressions.Regex.IsMatch(client.Pincode, @"^\d{6}$"))
-                {
-                    CommonViewModel.IsSuccess = false;
-                    CommonViewModel.Message = "Pincode must be exactly 6 digits";
-                    CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                    return Ok(CommonViewModel);
-                }
+    //            if (string.IsNullOrWhiteSpace(client.Pincode)
+    //|| !System.Text.RegularExpressions.Regex.IsMatch(client.Pincode, @"^\d{6}$"))
+    //            {
+    //                CommonViewModel.IsSuccess = false;
+    //                CommonViewModel.Message = "Pincode must be exactly 6 digits";
+    //                CommonViewModel.StatusCode = ResponseStatusCode.Error;
+    //                return Ok(CommonViewModel);
+    //            }
            
 
 

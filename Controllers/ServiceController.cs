@@ -39,13 +39,13 @@ namespace Champerof.Controllers
             var validation = _validation.ValidateRequired(service.ServiceName, "Service Name");
             if (!validation.IsSuccess) return Ok(validation);
 
-            if (!service.DefaultPrice.HasValue || service.DefaultPrice <= 0)
-            {
-                CommonViewModel.IsSuccess = false;
-                CommonViewModel.StatusCode = ResponseStatusCode.Error;
-                CommonViewModel.Message = "Default Price must be greater than 0";
-                return Ok(CommonViewModel);
-            }
+            //if (!service.DefaultPrice.HasValue || service.DefaultPrice <= 0)
+            //{
+            //    CommonViewModel.IsSuccess = false;
+            //    CommonViewModel.StatusCode = ResponseStatusCode.Error;
+            //    CommonViewModel.Message = "Default Price must be greater than 0";
+            //    return Ok(CommonViewModel);
+            //}
 
             var (IsSuccess, Message, Id, Extra) = await _serviceRepository.AddOrUpdateService(service);
 
